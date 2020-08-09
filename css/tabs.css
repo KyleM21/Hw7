@@ -1,0 +1,39 @@
+/*	DOCTYPE CSS
+	File:  tabs.css
+	Name: Kyle Marcoux
+    Email: kyle_marcoux@student.uml.edu
+    Umass Lowell 91.61 GUI Programming 1
+    Created 8/7/20
+    The css for the tabs in index.html
+
+*/
+#tabs {     
+	padding-bottom: 15px;
+	padding-left: 5px;
+	padding-right: 5px;
+	border:1px solid #636363;  
+	background:#c2c2c2 none;
+	margin: 30px 0px 0px 0px;
+	}
+.ui-widget-header {  
+	border:0; 
+	background:#c2c2c2 none; 
+	font-family:Georgia;
+	}
+#tabs .ui-widget-content { 
+	border:1px solid #aaa; 
+	background:#fff none; 
+	font-size:80%; 
+	}
+.ui-state-default, 
+.ui-widget-content 
+.ui-state-default {  
+	border:1px solid #636363; 
+	background:#a2a2a2 none;
+	}
+.ui-state-active, 
+.ui-widget-content 
+.ui-state-active {  
+	border:1px solid #aaa; 
+	background:#fff none;
+	}

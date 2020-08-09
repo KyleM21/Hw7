@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<!--File: index.html
+	Name: Kyle Marcoux
+    Email: kyle_marcoux@student.uml.edu
+    Umass Lowell 91.61 GUI Programming 1
+    Created 7/25/20
+    This html page will layout a form where the user can give the dimensions for a multiplication table,
+	which will be sent to a javascript file that will generate the table into tabs so that it supports 
+	multiple tables.  Before creating the table it will validate the data and also has sliders for an
+	alternative method of input.
+-->
+
+<!-- The language of this page is English -->
+<html lang="en">
+<head>
+	<!--<meta name="title" content="Multiplication Table Generator">
+		<meta name="description" content="This is a small table for multiplication">
+		<meta name="keywords" content="homework, multiplication, validation, sliders, tabs">
+		<meta name="robots" content="noindex, nofollow">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="language" content="English">
+		<meta name="author" content="Kyle M">-->
+		
+	<title>Multiplication Table Generator</title>
+	<!-- This is my style sheet -->
+	<link rel="stylesheet" href="css/hw7.css">	
+	
+	<!-- This is the call to the stylesheet and scripts -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+	
+	<!-- Slider scritps -->
+	<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+	<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	
+	<!-- These are links to my javascript files. 
+		I didn't put the slides and validator in 
+		external files because I couldn't get them 
+		to work externally for some reason -->
+		
+	<!-- This is the script for the table generator -->
+	<script type = "text/javascript" src="js/table.js"></script>
+	
+	<!-- This is the stylesheet script for tabs -->
+	<link rel="stylesheet" href="css/tabs.css">
+	<script type = "text/javascript">
+		$( function() {
+		
+			/*	This creates the tab container and sets the width so that it will always fit
+				the content inside each tab.
+			*/
+			$('#cont').css({
+				"min-width": "75%",
+				'width':'auto',
+				'height':'auto',
+				'display':'table'
+			}
+			)
+			$( "#tabs" ).tabs();
+			
+			/* 	This click listener is the close button on the tabs.  You click it and the tab
+				get removed.
+			*/
+			$( "#tabs" ).on( "click", "span.ui-icon-close", function() {
+				var panelId = $( this ).closest( "li" ).remove().attr( "aria-controls" );
+				$( "#" + panelId ).remove();
+				tabs.tabs( "refresh" );
+			});
+		} );
+	</script>
+	
+	<!-- This is my slider script:
+		I set the range on the sliders to -50,50 because if the user
+		accidentally creates an extremely large table using the sliders
+		it would result in a negative experience.  If you wish to create 
+		a extremely large table you just have to type it into the input forms-->
+	<script type = "text/javascript">
+		$(function() {
+		
+			/* These declare the slider for each form, setting the range between -50 and 50.
+			  After setting the range it sets up a slide event listener to change the form value after 
+			  the slide moves, and then submits the form when its done.  I won't paste this after every
+			  slider because it would create a lot of clutter.
+			  
+			  One thing I did that I think is really cool is that I fully expanded on the idea for the 
+			  black and white table that shows you what the table will look like.  I thought this would 
+			  be good for anyone who was confused on howthis worked, that way the user can see exactly 
+			  what kind of table they are creating.  In hindsight the purpose is kind of pointless when 
+			  the actual table is instantly createdonce all sliders have been moved, but its the thought 
+			  that counts!
+			*/ 
+            $( "#sliderX1" ).slider({
+				orientation:"horizontal",
+				min: -50,
+				max: 50,
+				value:0,
+				slide: function( event, ui ) {
+					$( "#x1" ).val( ui.value );
+					document.getElementById("x1Demo").innerHTML = document.getElementById("x1").value;
+				},
+				stop: function(event, ui) {
+				  $("form[name='tForm']").submit();          
+				},
+            });
+            $( "#x1" ).val( $( "#slider" ).slider( "value" ) );
+			$("#x1").change(function() {
+				$("#sliderX1").slider("value", $(this).val());
+				document.getElementById("x1Demo").innerHTML = document.getElementById("x1").value;
+			});
+
+
+			//Slider for x2
+			$( "#sliderX2" ).slider({
+				orientation:"horizontal",
+				min: -50,
+				max: 50,
+				value:0,
+				slide: function( event, ui ) {
+					$( "#x2" ).val( ui.value );
+					document.getElementById("x2Demo").innerHTML = document.getElementById("x2").value;
+				},
+				stop: function(event, ui) {
+				  $("form[name='tForm']").submit();          
+				},	
+            });
+            $( "#x2" ).val( $( "#slider" ).slider( "value" ) );
+			$("#x2").change(function() {
+				$("#sliderX2").slider("value", $(this).val());
+				document.getElementById("x2Demo").innerHTML = document.getElementById("x2").value;
+			});
+				
+			
+			//Slider for y1
+			$( "#sliderY1" ).slider({
+				orientation:"horizontal",
+				min: -50,
+				max: 50,
+				value:0,
+				slide: function( event, ui ) {
+					$( "#y1" ).val( ui.value );
+					document.getElementById("y1Demo").innerHTML = document.getElementById("y1").value;
+				},
+				stop: function(event, ui) {
+				  $("form[name='tForm']").submit();          
+				},				
+            });
+            $( "#y1" ).val( $( "#slider" ).slider( "value" ) );
+			$("#y1").change(function() {
+				$("#sliderY1").slider("value", $(this).val());
+				document.getElementById("y1Demo").innerHTML = document.getElementById("y1").value;
+			});
+			
+			
+			//Slider for y2
+			$( "#sliderY2" ).slider({
+				orientation:"horizontal",
+				min: -50,
+				max: 50,
+				value:0,
+				slide: function( event, ui ) {
+					$( "#y2" ).val( ui.value );
+					document.getElementById("y2Demo").innerHTML = document.getElementById("y2").value;
+				},
+				stop: function(event, ui) {
+				  $("form[name='tForm']").submit();          
+				},	
+            });
+            $( "#y2" ).val( $( "#slider" ).slider( "value" ) );
+			$("#y2").change(function() {
+				$("#sliderY2").slider("value", $(this).val());
+				document.getElementById("y2Demo").innerHTML = document.getElementById("y2").value;
+			});
+         });
+	</script>
+	
+	<!-- This is the script for my validator-->
+	<script type="text/javascript">
+		
+		// waits for DOM
+		$(document).ready(function(){
+			
+			// Starts validating the form
+			$("form[name='tForm']").validate({
+				
+				// Rules of validation, requiring fields and numbers only
+				rules: {
+					x1:	{
+						required: true,
+						number: true
+						},
+					x2:	{
+						required: true,
+						number: true
+						},
+					y1:	{
+						required: true,
+						number: true
+						},
+					y2:	{
+						required: true,
+						number: true
+						}
+
+				},
+				
+				// Error messages
+				messages: {
+					x1:	{
+						required: "This value needs to be filled in",
+						number: "Please enter a valid number with no letters or special characters (x1)"
+						},
+					x2:	{
+						required: "This value needs to be filled in",
+						number: "Please enter a valid number with no letters or special characters (x2)"
+						},
+					y1:	{
+						required: "This value needs to be filled in",
+						number: "Please enter a valid number with no letters or special characters (y1)"
+						},
+					y2:	{
+						required: "This value needs to be filled in",
+						number: "Please enter a valid number with no letters or special characters (y2)"
+						}
+				},
+				
+				// Upon submission it attempts to send the form as an array to build the table.
+				submitHandler: function(form) {
+					math();
+				}
+				
+		  });
+		});
+	</script>
+
+</head>
+<body>
+	<!-- This is the main container -->
+	<div class="mt-4 container">	
+		<h2 id="header">Kyle's Multiplication Table Generator!</h2>
+			<div class="mt-4 row">
+			
+				<!-- This column contains my form for the multiplication table -->
+				<div class="col-md-5">
+					<form name="tForm">
+						<label for="name">Starting x (x1)</label>
+						<input type="number" class="form-control txtbox"  id="x1" name="x1" placeholder="Please enter x1">
+						<div id="sliderX1" class="slid"></div>
+						
+						<label for="email">Ending x (x2)</label>
+						<input type="number" class="form-control txtbox"  id="x2" name="x2" placeholder="Please enter x2">
+						<div id="sliderX2" class="slid"></div>
+						
+						<label for="name">Starting y (y1)</label>
+						<input type="number" class="form-control txtbox"  id="y1" name="y1" placeholder="Please enter y1">
+						<div id="sliderY1" class="slid"></div>
+						
+						<label for="name">Ending y (y2)</label>
+						<input type="number" class="form-control txtbox"  id="y2" name="y2" placeholder="Please enter y2">
+						<div id="sliderY2" class="slid"></div>
+						
+						<!-- Upon clicking this button it will submit the form and generate a table using JavaScript-->
+						<div class="col text-center">
+							<button id= "subButton" type="submit" class="btn btn-dark center" onsubmit="return false" >Submit!</button>
+						</div>
+						<div class="col text-center">
+							<button id= "clearButton" type="button" class="btn btn-dark center" onclick="clearTabs()">Clear Tabs!</button>
+						</div>
+					</form>
+				</div>
+				
+				<!-- I wanted a small gap between the form and the preview and I could not figure out how,
+					so I settled for this empty column!-->
+				<div class="col-md-1">
+				</div>
+				
+				<!-- This is a column with a demo table to show people what the x and y values control.  
+					 I put this here incase someone needed reference while they use this! -->
+				<div class="col-md-6">
+					<h3 class="text-center">Here's what your table will look like!</h3>
+					<table id="table" class="table table-striped table-dark">
+						<thead>
+						  <tr>
+							<th> </th>
+							<th id="x1Demo">x1</th>
+							<th>...</th>
+							<th>...</th>
+							<th>...</th>
+							<th id="x2Demo">x2</th>
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr>
+							<td id="y1Demo" class="font-weight-bold">y1</td>
+							<td>...</td>
+							<td>...</td>
+							<td>...</td>
+							<td>...</td>
+							<td>...</td>
+						  </tr>
+						  <tr>
+							<td>...</td>
+							<td>...</td>
+							<td>...</td>
+							<td>...</td>
+							<td>...</td>
+							<td>...</td>
+						  </tr>
+						  <tr>
+							<td>...</td>
+							<td>...</td>
+							<td>...</td>
+							<td>...</td>
+							<td>...</td>
+							<td>...</td>
+						  </tr>
+						  <tr>
+							<td>...</td>
+							<td>...</td>
+							<td>...</td>
+							<td>...</td>
+							<td>...</td>
+							<td>...</td>
+						  </tr>
+						  <tr>
+							<td id="y2Demo" class="font-weight-bold">y2</td>
+							<td>...</td>
+							<td>...</td>
+							<td>...</td>
+							<td>...</td>
+							<td>...</td>
+						  </tr>
+						</tbody>
+					</table>
+					
+					<!-- Just to be fun and see if I could, I was able to create a big border mode that makes the border 100px thick
+						 it's funny even though it gets kinda glitchy on larger tables-->
+					<input type="checkbox" id="bigMode" name="Big Border Mode">
+						<label for="big">Big border mode? (Experimental)</label>
+						<h6>Please hit submit after ticking the box!</h6>
+				</div>
+			</div>
+			
+		</div>
+		
+		<!-- This container holds the dynamically changing tabs.  I even included
+			 an instruction tab to guide any user who needs help	-->
+		<div id="cont" class="container">
+			<div id="tabs" class="w-auto" >
+				<ul id="tabStyle">    
+					<li><a href="#tabs-0">Instructions</a></li>
+				</ul>
+				<div id="tabs-0">
+					<p id="info"> First input the beginning and ending values for both x and y, alternatively you can use the 
+						sliders as well.
+						<br>  You can preview what the table will look like on the right if you needa reference.  The tabs 
+						are closable except for this one and if you wish to clear all of the tabsyou may hit the "Clear Tabs!" 
+						button.
+						<br>I set the range on the sliders to -50,50 so you won't accidentaly create an extremely large table.  
+						If you wish to create a extremely large table you just have to type it into the input forms</p>
+				</div>
+			</div>
+		</div>
+</body>
+</html>
